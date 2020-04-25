@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from 'react';
+import { Map } from 'immutable';
 
-function App() {
+import Posts from './components/Posts';
+import { Store } from './context';
+import { postsReducer } from './redux/reducer/posts';
+
+const postInitialState = new Map({});
+
+const App = () => {
+  const [posts, dispatchPosts] = useReducer(postsReducer, postInitialState);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Store.Provider
+      value={{
+        posts,
+        dispatchPosts
+      }}
+    >
+      <Posts />
+    </Store.Provider>
   );
 }
 
